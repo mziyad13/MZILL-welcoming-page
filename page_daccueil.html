@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MZILL CORP — Comment ça marche</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root {
+  --bg: #080a0f;
+  --surface: #0f1117;
+  --surface2: #161820;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.11);
+  --text: #eef0f7;
+  --muted: #6b7080;
+  --accent: #3d8eff;
+  --accent-glow: rgba(61,142,255,0.15);
+  --teal: #1fd9a0;
+  --teal-glow: rgba(31,217,160,0.12);
+  --purple: #9d7bff;
+  --purple-glow: rgba(157,123,255,0.12);
+  --amber: #f5a623;
+  --amber-glow: rgba(245,166,35,0.12);
+  --green: #2ddb6f;
+  --green-glow: rgba(45,219,111,0.12);
+  --r: 14px;
+  --fh: 'Syne', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--fb);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(8,10,15,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 0.5px solid var(--border);
+}
+.logo {
+  font-family: var(--fh);
+  font-size: 18px; font-weight: 800; letter-spacing: -0.01em;
+  color: var(--text);
+  display: flex; align-items: center; gap: 8px;
+}
+.logo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  animation: pulse-dot 2.5s ease infinite;
+}
+.nav-links {
+  display: flex; gap: 32px; list-style: none;
+}
+.nav-links a {
+  font-size: 13px; color: var(--muted); text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  font-family: var(--fh); font-size: 13px; font-weight: 600;
+  background: var(--accent); color: #fff;
+  padding: 9px 22px; border-radius: 8px; text-decoration: none;
+  transition: all 0.2s;
+}
+.nav-cta:hover { background: #5ba0ff; transform: translateY(-1px); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative;
+}
+
+.hero-bg {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+}
+.hero-bg::before {
+  content: '';
+  position: absolute; top: 20%; left: 50%; transform: translate(-50%,-50%);
+  width: 800px; height: 600px;
+  background: radial-gradient(ellipse, rgba(61,142,255,0.07) 0%, transparent 65%);
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 0%, transparent 100%);
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--fh); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(61,142,255,0.08);
+  border: 1px solid rgba(61,142,255,0.2);
+  padding: 6px 16px; border-radius: 100px;
+  margin-bottom: 28px;
+  animation: fadeUp 0.5s ease both;
+}
+.hero-badge-dot {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+  animation: pulse-dot 2s ease infinite;
+}
+
+h1.hero-title {
+  font-family: var(--fh);
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 800; line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+  animation: fadeUp 0.5s ease 0.1s both;
+}
+h1.hero-title .line2 {
+  display: block;
+  background: linear-gradient(90deg, var(--accent), var(--teal));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 18px; font-weight: 300; color: var(--muted);
+  max-width: 520px; line-height: 1.65;
+  margin-bottom: 44px;
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+
+.hero-actions {
+  display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+  animation: fadeUp 0.5s ease 0.3s both;
+}
+.btn-primary {
+  font-family: var(--fh); font-size: 14px; font-weight: 600;
+  background: var(--accent); color: #fff;
+  padding: 13px 30px; border-radius: 10px; text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-primary:hover { background: #5ba0ff; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(61,142,255,0.3); }
+.btn-ghost {
+  font-family: var(--fh); font-size: 14px; font-weight: 500;
+  background: transparent; color: var(--text);
+  border: 1px solid var(--border2);
+  padding: 13px 30px; border-radius: 10px; text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-ghost:hover { background: var(--surface); border-color: rgba(255,255,255,0.2); }
+
+.hero-stats {
+  display: flex; gap: 48px; margin-top: 72px; justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeUp 0.5s ease 0.4s both;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: var(--fh); font-size: 28px; font-weight: 800;
+  color: var(--text); display: block;
+}
+.stat-label { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+/* ── SECTION FLOW ── */
+.section {
+  max-width: 1100px; margin: 0 auto;
+  padding: 100px 24px;
+}
+
+.section-eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+}
+.eyebrow-line {
+  width: 32px; height: 1px; background: var(--accent);
+}
+.eyebrow-text {
+  font-family: var(--fh); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+}
+
+.section-title {
+  font-family: var(--fh); font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800; letter-spacing: -0.02em;
+  line-height: 1.15; margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 16px; font-weight: 300; color: var(--muted);
+  max-width: 480px; line-height: 1.65; margin-bottom: 72px;
+}
+
+/* ── STEPS ── */
+.steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  position: relative;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 0 28px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.step.visible { opacity: 1; transform: translateY(0); }
+
+.step-left {
+  display: flex; flex-direction: column; align-items: center;
+}
+
+.step-num-wrap {
+  width: 56px; height: 56px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fh); font-size: 18px; font-weight: 800;
+  flex-shrink: 0;
+  position: relative; z-index: 1;
+  border: 1px solid;
+}
+
+.step-line {
+  width: 1px; flex: 1;
+  min-height: 40px;
+  margin: 8px 0;
+}
+
+.step:last-child .step-line { display: none; }
+
+.step-body {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  cursor: default;
+}
+.step-body:hover {
+  border-color: var(--border2);
+}
+
+.step-tag {
+  display: inline-block;
+  font-family: var(--fh); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 100px;
+  margin-bottom: 12px;
+}
+
+.step-title {
+  font-family: var(--fh); font-size: 20px; font-weight: 700;
+  margin-bottom: 10px; letter-spacing: -0.01em;
+}
+
+.step-desc {
+  font-size: 14px; font-weight: 300; color: var(--muted);
+  line-height: 1.7; margin-bottom: 20px;
+}
+
+.step-details {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.detail-pill {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--muted);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 5px 12px;
+}
+.detail-pill svg {
+  width: 13px; height: 13px; flex-shrink: 0;
+}
+
+/* Color schemes per step */
+.s1 .step-num-wrap { background: rgba(61,142,255,0.1); border-color: rgba(61,142,255,0.25); color: var(--accent); }
+.s1 .step-line { background: linear-gradient(to bottom, rgba(61,142,255,0.4), rgba(31,217,160,0.2)); }
+.s1 .step-tag { background: rgba(61,142,255,0.1); color: #7db8ff; }
+.s1 .step-body:hover { border-color: rgba(61,142,255,0.25); box-shadow: 0 0 32px rgba(61,142,255,0.06); }
+
+.s2 .step-num-wrap { background: rgba(31,217,160,0.1); border-color: rgba(31,217,160,0.25); color: var(--teal); }
+.s2 .step-line { background: linear-gradient(to bottom, rgba(31,217,160,0.4), rgba(157,123,255,0.2)); }
+.s2 .step-tag { background: rgba(31,217,160,0.1); color: #4de8b8; }
+.s2 .step-body:hover { border-color: rgba(31,217,160,0.25); box-shadow: 0 0 32px rgba(31,217,160,0.06); }
+
+.s3 .step-num-wrap { background: rgba(157,123,255,0.1); border-color: rgba(157,123,255,0.25); color: var(--purple); }
+.s3 .step-line { background: linear-gradient(to bottom, rgba(157,123,255,0.4), rgba(245,166,35,0.2)); }
+.s3 .step-tag { background: rgba(157,123,255,0.1); color: #b99dff; }
+.s3 .step-body:hover { border-color: rgba(157,123,255,0.25); box-shadow: 0 0 32px rgba(157,123,255,0.06); }
+
+.s4 .step-num-wrap { background: rgba(245,166,35,0.1); border-color: rgba(245,166,35,0.25); color: var(--amber); }
+.s4 .step-line { background: linear-gradient(to bottom, rgba(245,166,35,0.4), rgba(45,219,111,0.2)); }
+.s4 .step-tag { background: rgba(245,166,35,0.1); color: #f7bf5a; }
+.s4 .step-body:hover { border-color: rgba(245,166,35,0.25); box-shadow: 0 0 32px rgba(245,166,35,0.06); }
+
+.s5 .step-num-wrap { background: rgba(45,219,111,0.1); border-color: rgba(45,219,111,0.25); color: var(--green); }
+.s5 .step-tag { background: rgba(45,219,111,0.1); color: #5de88a; }
+.s5 .step-body:hover { border-color: rgba(45,219,111,0.25); box-shadow: 0 0 32px rgba(45,219,111,0.06); }
+
+/* ── TRUST BAND ── */
+.trust-band {
+  border-top: 0.5px solid var(--border);
+  border-bottom: 0.5px solid var(--border);
+  background: var(--surface);
+  padding: 40px 24px;
+  text-align: center;
+}
+.trust-band-inner {
+  max-width: 900px; margin: 0 auto;
+  display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--muted);
+}
+.trust-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+.trust-icon.b { background: rgba(61,142,255,0.1); }
+.trust-icon.g { background: rgba(45,219,111,0.1); }
+.trust-icon.t { background: rgba(31,217,160,0.1); }
+.trust-icon.p { background: rgba(157,123,255,0.1); }
+
+/* ── CTA SECTION ── */
+.cta-section {
+  max-width: 760px; margin: 0 auto;
+  padding: 100px 24px;
+  text-align: center;
+}
+.cta-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 60px 48px;
+  position: relative; overflow: hidden;
+}
+.cta-card::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(61,142,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-title {
+  font-family: var(--fh); font-size: clamp(24px, 4vw, 36px);
+  font-weight: 800; letter-spacing: -0.02em; margin-bottom: 14px;
+}
+.cta-sub {
+  font-size: 15px; color: var(--muted); font-weight: 300;
+  line-height: 1.6; margin-bottom: 36px;
+}
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 0.5px solid var(--border);
+  padding: 32px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-copy { font-size: 12px; color: var(--muted); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 12px; color: var(--muted); text-decoration: none; }
+.footer-links a:hover { color: var(--text); }
+
+/* ── ANIMS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-dot {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.65); }
+}
+
+@media (max-width: 640px) {
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+  .step { grid-template-columns: 56px 1fr; gap: 0 16px; }
+  .step-num-wrap { width: 44px; height: 44px; font-size: 15px; }
+  .step-body { padding: 20px 20px; }
+  footer { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    MZILL CORP
+  </div>
+  <ul class="nav-links">
+    <li><a href="#flow">Comment ça marche</a></li>
+    <li><a href="#offres">Nos offres</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#flow" class="nav-cta">Démarrer →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+  </div>
+
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Conforme NIS 2 · 2026
+  </div>
+
+  <h1 class="hero-title">
+    Votre PME protégée
+    <span class="line2">en 5 étapes simples</span>
+  </h1>
+
+  <p class="hero-sub">
+    De l'audit initial à la certification, MZILL automatise votre cybersécurité sans que vous ayez besoin d'une équipe IT dédiée.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#flow" class="btn-primary">Voir le parcours</a>
+    <a href="#offres" class="btn-ghost">Voir les offres</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">66%</span>
+      <span class="stat-label">des PME ont subi une attaque</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">466k€</span>
+      <span class="stat-label">coût moyen d'un incident</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">60%</span>
+      <span class="stat-label">ferment dans les 18 mois</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">€149</span>
+      <span class="stat-label">pour démarrer / mois</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAND -->
+<div class="trust-band">
+  <div class="trust-band-inner">
+    <div class="trust-item">
+      <div class="trust-icon b">🛡️</div>
+      <span>Conforme RGPD & NIS 2</span>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon g">✓</div>
+      <span>Certification reconnue par vos partenaires</span>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon t">🤖</div>
+      <span>IA de détection des deepfakes</span>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon p">⚡</div>
+      <span>Mis en place en moins de 24h</span>
+    </div>
+  </div>
+</div>
+
+<!-- FLOW SECTION -->
+<section class="section" id="flow">
+  <div class="section-eyebrow">
+    <div class="eyebrow-line"></div>
+    <span class="eyebrow-text">Parcours client</span>
+  </div>
+  <h2 class="section-title">De zéro à certifié,<br>sans friction.</h2>
+  <p class="section-sub">Un processus guidé, automatisé, conçu pour les dirigeants qui n'ont pas le temps de devenir experts en cybersécurité.</p>
+
+  <div class="steps">
+
+    <!-- Step 1 -->
+    <div class="step s1" data-step="1">
+      <div class="step-left">
+        <div class="step-num-wrap">01</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <span class="step-tag">Onboarding</span>
+        <h3 class="step-title">Inscription & configuration du compte</h3>
+        <p class="step-desc">Le dirigeant crée son compte en 3 minutes, choisit sa formule (Starter, Plus ou Premium) et renseigne les domaines d'activité de son entreprise. La plateforme s'adapte automatiquement à son secteur.</p>
+        <div class="step-details">
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            Création compte dirigeant
+          </div>
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12l2 2 4-4"/></svg>
+            Choix de la formule
+          </div>
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
+            Mise en place en &lt; 24h
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step s2" data-step="2">
+      <div class="step-left">
+        <div class="step-num-wrap">02</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <span class="step-tag">Audit Initial</span>
+        <h3 class="step-title">Score de risque NIS 2 en temps réel</h3>
+        <p class="step-desc">Dès la première connexion, la plateforme lance l'audit NIS 2 simplifié. L'utilisateur répond à un questionnaire guidé et obtient immédiatement son score de risque global ainsi que les axes prioritaires à corriger.</p>
+        <div class="step-details">
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Questionnaire NIS 2 guidé
+          </div>
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Score de risque global
+          </div>
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+            Failles identifiées en priorité
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step s3" data-step="3">
+      <div class="step-left">
+        <div class="step-num-wrap">03</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <span class="step-tag">Plan d'action</span>
+        <h3 class="step-title">Feuille de route personnalisée</h3>
+        <p class="step-desc">La plateforme génère automatiquement un plan d'action priorisé avec des guides pas-à-pas pour corriger chaque faille — sans jargon technique, sans besoin d'un DSI. Chaque action améliore le score en temps réel.</p>
+        <div class="step-details">
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            Actions classées par priorité
+          </div>
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            Guides sans jargon technique
+          </div>
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            Score mis à jour en direct
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step s4" data-step="4">
+      <div class="step-left">
+        <div class="step-num-wrap">04</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <span class="step-tag">Entraînement continu</span>
+        <h3 class="step-title">Simulations de phishing automatisées</h3>
+        <p class="step-desc">En arrière-plan, l'IA envoie des campagnes de phishing simulées aux employés pour tester et renforcer leurs réflexes. Chaque résultat est tracé dans le tableau de bord avec des recommandations de formation ciblées.</p>
+        <div class="step-details">
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            Emails de phishing simulés
+          </div>
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            Résultats par employé
+          </div>
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 110 20 10 10 0 010-20zm0 5v5l4 2"/></svg>
+            Fréquence mensuelle (Plus/Premium)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step s5" data-step="5">
+      <div class="step-left">
+        <div class="step-num-wrap">05</div>
+      </div>
+      <div class="step-body">
+        <span class="step-tag">Certification</span>
+        <h3 class="step-title">Téléchargement du Cyber Certificate</h3>
+        <p class="step-desc">Une fois le score de sécurité validé, le dirigeant télécharge son Cyber Certificate officiel et le transmet à ses partenaires commerciaux et grands comptes. Un avantage concurrentiel direct dans les appels d'offres.</p>
+        <div class="step-details">
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-2 5L9 9l11 4-5 2zm0 0l4.5 4.5"/></svg>
+            Score validé automatiquement
+          </div>
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            Certificat PDF téléchargeable
+          </div>
+          <div class="detail-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            Reconnu par vos partenaires NIS 2
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="offres">
+  <div class="cta-card">
+    <h2 class="cta-title">Prêt à protéger votre entreprise ?</h2>
+    <p class="cta-sub">Rejoignez les PME qui ont choisi MZILL CORP pour leur conformité NIS 2. Démarrez dès aujourd'hui à partir de 149 € / mois.</p>
+    <div class="cta-btns">
+      <a href="#" class="btn-primary">Démarrer — Starter à €149/mois</a>
+      <a href="#" class="btn-ghost">Comparer les offres</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">© 2026 MZILL CORP. Tous droits réservés.</span>
+  <div class="footer-links">
+    <a href="#">Mentions légales</a>
+    <a href="#">RGPD</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+const steps = document.querySelectorAll('.step');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      const delay = (parseInt(e.target.dataset.step) - 1) * 120;
+      setTimeout(() => e.target.classList.add('visible'), delay);
+    }
+  });
+}, { threshold: 0.15 });
+steps.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>
